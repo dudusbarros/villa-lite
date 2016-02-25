@@ -27,26 +27,13 @@ colorFactory = function() {
 		var value = colors[i][1];
 
 		styleSheetString.push(
-			['.' + name + ', .a-' + name + ':active' + ', .f-' + name+ ':focus' + ', .h-' + name+ ':hover', [['background-color', value]]],
-			['.font-' + name + ', .afont-' + name+ ':active' + ', .ffont-' + name+ ':focus' + ', .hfont-' + name+ ':hover', [['color', value]]],
-			['.border-' + name + ', .aborder-' + name+ ':active' + ', .fborder-' + name+ ':focus' + ', .hborder-' + name+ ':hover', [['border-color', value]]]
+			['.' + name, [['background-color', value]]],
+			['.font-' + name, [['color', value]]],
+			['.border-' + name, [['border-color', value]]]
 		);
 	}
 
-	var villaApi = [
-		['.min-height-window',
-			[['min-height', window.innerHeight + 'px']]
-		],
-		['.height-window',
-			[['height', window.innerHeight + 'px']]
-		],
-		['.max-height-window',
-			[['max-height', window.innerHeight + 'px']]
-		]
-	];
-
 	addStylesheetRules(styleSheetString);
-	addStylesheetRules(villaApi);
 };
 
 /**
@@ -249,147 +236,6 @@ buildFoundation = function() {
 	];
 
 	addStylesheetRules(styles);
-
-};
-
-/**
- * Villa Grid v3.0.0 (http://getvilla.org/)
- * Copyright 2013-2015 Noibe Developers
- * Licensed under MIT (https://github.com/noibe/villa/blob/master/LICENSE)
- */
-var buildGrid;
-buildGrid = function() {
-
-	var i, j, k, p, u, r, s = [];
-
-	u = 100 / 12;
-
-	s.push({
-		selector: ".col:before",
-		properties: [
-			['content', 'hehe']
-		]
-	});
-
-	s.push({
-		selector: "[class*='col-xs'], [class*='col-sm'], [class*='col-md'], [class*='col-lg']",
-		properties: [
-			['position', 'relative'],
-			['min-height', '1px']
-		]
-	});
-
-	s.push({
-		selector: "[class*='col-xl']",
-		properties: [
-			['float', 'left']
-		]
-	});
-
-	// non media rules
-
-	r = [
-		{
-			prefix: '.col-xs-',
-			properties: 'width',
-			zero: false
-		},
-		{
-			prefix: '.col-xs-pull-',
-			properties: 'right',
-			zero: true
-		},
-		{
-			prefix: '.col-xs-push-',
-			properties: 'left',
-			zero: true
-		},
-		{
-			prefix: '.col-xs-offset-',
-			properties: 'margin-left',
-			zero: true
-		}
-	];
-
-	for (i = 12 + 1; i--; )
-		if (r.length) {
-			p = u * i;
-			if (p) p += '%';
-			for (j = r.length; j--; )
-				if ((i > 0) || ((i === 0) && (r[j].zero)))
-					s.push([
-						r[j].prefix + i,
-						[[r[j].properties, p]]
-					]);
-		}
-
-	// media rules
-
-	var m = [
-		['sm', 36],
-		['md', 48],
-		['lg', 60],
-		['xl', 72]
-	];
-
-	for (k = m.length; k--; ) {
-
-		var name = m[k][0];
-		var size = m[k][1];
-
-		var media = {
-			type: 'media',
-			features: '(min-width: ' + size + 'em)',
-			rules: []
-		};
-
-		media.rules.push({
-			selector: "[class*='col-" + name + "']",
-			properties: [
-				['float', 'left']
-			]
-		});
-
-		var mediaRules = [
-			{
-				prefix: '.col-' + name + '-',
-				properties: 'width',
-				zero: false
-			},
-			{
-				prefix: '.col-' + name + '-pull-',
-				properties: 'right',
-				zero: true
-			},
-			{
-				prefix: '.col-' + name + '-push-',
-				properties: 'left',
-				zero: true
-			},
-			{
-				prefix: '.col-' + name + '-offset-',
-				properties: 'margin-left',
-				zero: true
-			}
-		];
-
-		for (i = 12 + 1; i--; )
-			if (mediaRules.length) {
-				p = u * i;
-				if (p) p += '%';
-				for (j = mediaRules.length; j--; )
-					if ((i > 0) || ((i === 0) && (mediaRules[j].zero)))
-						media.rules.push([
-							mediaRules[j].prefix + i,
-							[[mediaRules[j].properties, p]]
-						]);
-			}
-
-		s.push(media);
-
-	}
-
-	addStylesheetRules(s);
 
 };
 
@@ -713,7 +559,6 @@ getWebFont = function () {
 (function () {
 	buildFoundation();
 	buildFlex();
-	buildGrid();
 	colorFactory();
 	getWebFont();
 })();
